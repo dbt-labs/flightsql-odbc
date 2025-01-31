@@ -176,6 +176,9 @@ void FlightSqlConnection::Connect(const ConnPropertyMap &properties,
     ThrowIfNotOK(
       FlightClient::Connect(location, client_options, &flight_client));
 
+    PopulateMetadataSettings(properties);
+    PopulateCallOptions(properties);
+
     std::unique_ptr<FlightSqlAuthMethod> auth_method =
       FlightSqlAuthMethod::FromProperties(flight_client, properties);
     auth_method->Authenticate(*this, call_options_);
